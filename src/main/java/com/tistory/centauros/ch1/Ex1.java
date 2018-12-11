@@ -12,9 +12,9 @@ public class Ex1 implements Runnable {
     Log log = LogFactory.getLog("stdLogger");
 
     public void run() {
-        int i;
-        for (i = 0; i <= 1000; i++) {
-            i += i;
+        int i = 0;
+        for (int j = 0; j <= 1000; j++) {
+            i += j;
         }
         log.debug("i :: " + i);
         System.out.println("i :: " + i);
