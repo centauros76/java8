@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  */
 public class ConsumerExamples {
 
-    private static void multiply(int number) {
+    public static void multiply(int number) {
         List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         for (Integer num : nums) {
             System.out.println(number + " * " + num +" = " +(num*number));
