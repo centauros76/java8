@@ -37,6 +37,7 @@ public class PredicateExamples {
         System.out.println("isPositiveNum :: " + filter(numbers, isPositiveNum));
         System.out.println("lessThan3 :: " + filter(numbers, lessThan3));
         System.out.println("isNegativeNum :: " + filter(numbers, num -> num < 0));
+        System.out.println("isOddNum :: " + filter(numbers, num -> num%2 != 0));
 
     }
 
