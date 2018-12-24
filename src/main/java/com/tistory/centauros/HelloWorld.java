@@ -1,5 +1,6 @@
 package com.tistory.centauros;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -13,5 +14,7 @@ public class HelloWorld {
         Log log = LogFactory.getLog("stdLogger");
         log.debug("Hello World");
         System.out.println("Hello World");
+
+        System.out.println(RandomStringUtils.randomAlphabetic(Integer.parseInt(RandomStringUtils.randomNumeric(1))));
     }
 }
