@@ -97,6 +97,7 @@ public class CapabilityTest {
         }
     }
 
+    //1-1.
     private void generateRandomData() {
         long startTime = System.currentTimeMillis();
         while(randomData.size() < 7000000) {
@@ -130,7 +131,7 @@ public class CapabilityTest {
     }
 
     //4.
-    private void checkPrefixKeyAndValue(String input) {
+    private List<Integer> checkPrefixKeyAndValue(String input) {
         int limit = input.length() < 4 ? input.length() : 4;
         String prefix;
         int value;
@@ -147,10 +148,7 @@ public class CapabilityTest {
                 System.out.println("key :: " + prefix + " is not mapping value !!");
             }
         }
-
-        for (Integer result : results) {
-            System.out.println(result + " count :: " + Collections.frequency(results, result));
-        }
+        return results;
     }
 
 
@@ -178,7 +176,10 @@ public class CapabilityTest {
         input = new Scanner(System.in);
         System.out.println("Please enter anyText ");
         String anyText = input.nextLine();
-        capabilityTest.checkPrefixKeyAndValue(anyText);
+        List<Integer> results = capabilityTest.checkPrefixKeyAndValue(anyText);
+        for (Integer result : results) {
+            System.out.println(result + " count :: " + Collections.frequency(results, result));
+        }
 
     }
 }
