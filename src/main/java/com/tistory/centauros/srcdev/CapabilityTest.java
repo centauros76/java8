@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by Rene on 2018-12-26.
@@ -177,7 +178,8 @@ public class CapabilityTest {
         System.out.println("Please enter anyText ");
         String anyText = input.nextLine();
         List<Integer> results = capabilityTest.checkPrefixKeyAndValue(anyText);
-        for (Integer result : results) {
+        List<Integer> distinctResults = (ArrayList<Integer>)results.stream().distinct().collect(Collectors.toList());
+        for (Integer result : distinctResults) {
             System.out.println(result + " count :: " + Collections.frequency(results, result));
         }
 

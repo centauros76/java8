@@ -18,8 +18,9 @@ public class ConsumerExamples {
     }
 
     public static void main(String[] args) {
-        Consumer<String> greeting = s -> ConsumerExamples.multiply(Integer.parseInt(s));
+//        Consumer<String> greeting = s -> ConsumerExamples.multiply(Integer.parseInt(s));
 
+        Consumer<String> greeting = s -> System.out.println(s);
         greeting.accept("9");
     }
 }

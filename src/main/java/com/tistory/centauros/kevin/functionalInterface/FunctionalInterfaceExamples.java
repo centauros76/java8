@@ -38,7 +38,7 @@ public class FunctionalInterfaceExamples {
         System.out.println("   old way :: " + expensiveProductList);
 
         Predicate<Product> expensiveFilter = product -> product.getPrice().compareTo(new BigDecimal("100000")) > 0;
-        expensiveProductList = listFilter(productList, expensiveFilter);
+        expensiveProductList = filter(productList, expensiveFilter);
         System.out.println("use filter :: " + expensiveProductList);
         
         //expensiveList에 50%할인 적용
@@ -48,16 +48,15 @@ public class FunctionalInterfaceExamples {
         }
         System.out.println("         old way :: " + discountProductsList);
 
-        discountProductsList = applyDistount(expensiveProductList, product -> new DiscountProduct(product.getId(), product.getName(), product.getPrice().multiply(new BigDecimal("0.5"))));
+        discountProductsList = map(expensiveProductList, product -> new DiscountProduct(product.getId(), product.getName(), product.getPrice().multiply(new BigDecimal("0.5"))));
         System.out.println("use applyDiscount:: " + discountProductsList);
 
         //discountProduct List에서 15만원 이하 물품 찾기
-        List<DiscountProduct> under15List = new ArrayList<>();
         Predicate<Product> lessOrEqual15 = product -> product.getPrice().compareTo(new BigDecimal("150000")) <= 0;
-        under15List = listFilter(discountProductsList, lessOrEqual15);
+        List<DiscountProduct> under15List = filter(discountProductsList, lessOrEqual15);
 
         System.out.println(under15List);
-        System.out.println(listFilter(productList, lessOrEqual15));
+        System.out.println(filter(productList, lessOrEqual15));
 
 
 
@@ -71,13 +70,25 @@ public class FunctionalInterfaceExamples {
         System.out.println("   old way :: " + cheapProductList);
 
         Predicate<Product> cheapFilter = product -> product.getPrice().compareTo(new BigDecimal("100000")) <= 0;
-        cheapProductList = listFilter(productList, cheapFilter);
+        cheapProductList = filter(productList, cheapFilter);
         System.out.println("use filter :: " + cheapProductList);
+
+//        List<BigDecimal> prices = map(productList, product -> product.getPrice());
+//        BigDecimal total = BigDecimal.ZERO;
+//        for (BigDecimal price : prices) {
+//            total = total.add(price);
+//        }
+        BigDecimal total = total(productList, product -> product.getPrice());
+        System.out.println("product total price :: " + total);
+
+        BigDecimal discountedTotal = total(discountProductsList, product -> product.getPrice());
+        System.out.println("discounted product total price :: " + discountedTotal);
+
 
 
     }
 
-    private static <T> List<T> listFilter(List<T> list, Predicate<? super T> filter) {
+    private static <T> List<T> filter(List<T> list, Predicate<? super T> filter) {
         List<T> result = new ArrayList<>();
         for (T t : list) {
             if (filter.test(t)) {
@@ -87,12 +98,20 @@ public class FunctionalInterfaceExamples {
         return result;
     }
 
-    private static <T, R> List<R> applyDistount(List<T> list, Function<T, R> discountCondition) {
+    private static <T, R> List<R> map(List<T> list, Function<T, R> function) {
         List<R> result = new ArrayList<>();
         for (T t : list) {
-            result.add(discountCondition.apply(t));
+            result.add(function.apply(t));
         }
         return result;
+    }
+
+    private static <T> BigDecimal total(List<T> list, Function<T, BigDecimal> mapper) {
+        BigDecimal total = BigDecimal.ZERO;
+        for(T t : list) {
+            total = total.add(mapper.apply(t));
+        }
+        return total;
     }
 
 
