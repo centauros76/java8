@@ -1,10 +1,13 @@
 package com.tistory.centauros.srcdev.webCrawling.crawler;
 
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Rene on 2019-01-10.
@@ -13,11 +16,12 @@ import org.openqa.selenium.remote.CapabilityType;
 public class TestWebDriver {
 
     WebDriver webDriver;
+    ChromeOptions chromeOptions;
 
     private void init(boolean isProxy) {
         System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, "chromedriver");
 
-        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions = new ChromeOptions();
         chromeOptions.setHeadless(true);
         chromeOptions.addArguments("window-size=1920x1080");
         chromeOptions.addArguments("disable-dev-shm-usage");
@@ -46,8 +50,9 @@ public class TestWebDriver {
         init(isProxy);
 
         //2. webDriver이용해서 targetPage loading
-        webDriver.get(url);
 
+//        webDriver.manage().window().maximize();
+        webDriver.get(url.trim());
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -60,9 +65,8 @@ public class TestWebDriver {
         try {
             result = webDriver.getPageSource();
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
-            webDriver.close();
             webDriver.quit();
         }
 
